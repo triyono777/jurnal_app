@@ -36,6 +36,7 @@ class _AddFormScreenState extends State<AddFormScreen> {
             onPressed: () {
               listJurnal.add(
                 {
+                  "id": listJurnal.length + 1,
                   "nama_jurnal": namaController.text,
                   "deskripsi_jurnal": deskripsiController.text,
                   "waktu": waktuController.text

@@ -38,6 +38,15 @@ class _EditFormScreenState extends State<EditFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Form'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              listJurnal.removeWhere((element) => element["id"] == widget.id);
+              Navigator.of(context).pop(true);
+            },
+            icon: Icon(Icons.delete),
+          ),
+        ],
       ),
       body: Column(
         children: [

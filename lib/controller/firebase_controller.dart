@@ -8,4 +8,19 @@ class FirebaseController {
 
     return jurnal.get();
   }
+
+  addJurnal(Map<String, Object> data) {
+    CollectionReference jurnal = firestore.collection('jurnal');
+    jurnal.add(data);
+  }
+
+  updateJurnal({required String id, Map<String, Object>? data}) {
+    CollectionReference jurnal = firestore.collection('jurnal');
+    jurnal.doc(id).update(data ?? {});
+  }
+
+  deleteJurnal(String id) {
+    CollectionReference jurnal = firestore.collection('jurnal');
+    jurnal.doc(id).delete();
+  }
 }

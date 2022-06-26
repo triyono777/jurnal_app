@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:jurnal_app/controller/firebase_controller.dart';
 import 'package:jurnal_app/screen/edit_form_screen.dart';
 
 import '../widgets/item_jurnal_widget.dart';
@@ -19,30 +21,22 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Home Screen'),
       ),
-      body: ListView.builder(
-        itemCount: listJurnal.length,
-        itemBuilder: (context, index) => ItemJurnalWidget(
-          onTap: () async {
-            var hasil = await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => EditFormScreen(
-                  id: listJurnal[index]["id"],
-                  nama: listJurnal[index]["nama_jurnal"],
-                  deskripsi: listJurnal[index]["deskripsi_jurnal"],
-                  waktu: listJurnal[index]["waktu"],
-                ),
-              ),
-            );
-            print(hasil);
-            if (hasil == true) {
-              setState(() {});
+      body: FutureBuilder<QuerySnapshot>(
+          future: FirebaseController().getJurnal(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                // TODO: Handle this case.
+                break;
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+              case ConnectionState.done:
+                return bodyWidget(snapshot);
+              default:
+                return SizedBox();
             }
-          },
-          namaJurnal: listJurnal[index]["nama_jurnal"],
-          deskripsiJurnal: listJurnal[index]["deskripsi_jurnal"],
-          waktuJurnal: listJurnal[index]["waktu"],
-        ),
-      ),
+            return SizedBox();
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var hasil = await Navigator.of(context).push(
@@ -55,6 +49,34 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget bodyWidget(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+    var allData = snapshot.data?.docs;
+    return ListView.builder(
+      itemCount: allData?.length,
+      itemBuilder: (context, index) => ItemJurnalWidget(
+        onTap: () async {
+          var hasil = await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => EditFormScreen(
+                id: allData?[index].id ?? '',
+                nama: allData?[index]["nama_jurnal"],
+                deskripsi: allData?[index]["deskripsi_jurnal"],
+                waktu: allData?[index]["waktu"],
+              ),
+            ),
+          );
+          print(hasil);
+          if (hasil == true) {
+            setState(() {});
+          }
+        },
+        namaJurnal: allData?[index]["nama_jurnal"],
+        deskripsiJurnal: allData?[index]["deskripsi_jurnal"],
+        waktuJurnal: allData?[index]["waktu"],
       ),
     );
   }

@@ -16,7 +16,7 @@ class EditFormScreen extends StatefulWidget {
   final String nama;
   final String deskripsi;
   final String waktu;
-  final int id;
+  final id;
 
   @override
   State<EditFormScreen> createState() => _EditFormScreenState();

@@ -69,7 +69,7 @@ class _EditFormScreenState extends State<EditFormScreen> {
                 ),
               );
               if (hasil == true) {
-                listJurnal.removeWhere((element) => element["id"] == widget.id);
+                FirebaseController().deleteJurnal(widget.id);
                 Navigator.of(context).pop(true);
               }
             },

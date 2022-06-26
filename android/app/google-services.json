@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1025300124292",
+    "project_id": "projek-ea459",
+    "storage_bucket": "projek-ea459.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025300124292:android:fa596fba979b8105f228d1",
+        "android_client_info": {
+          "package_name": "dev.triyono.jurnal_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025300124292-k8rt3907r3r1473l8jgbo57nqpjvd87s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6l9Nu_z5h15sQv__JLu4N_D2stjZLg3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025300124292-k8rt3907r3r1473l8jgbo57nqpjvd87s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

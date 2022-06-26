@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             );
+            print(hasil);
             if (hasil == true) {
               setState(() {});
             }

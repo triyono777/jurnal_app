@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 import '../widgets/item_form_widget.dart';
@@ -40,9 +42,35 @@ class _EditFormScreenState extends State<EditFormScreen> {
         title: Text('Edit Form'),
         actions: [
           IconButton(
-            onPressed: () {
-              listJurnal.removeWhere((element) => element["id"] == widget.id);
-              Navigator.of(context).pop(true);
+            onPressed: () async {
+              var hasil = await showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  content: Text('delete?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Text('Delete'),
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.resolveWith(
+                            (states) => Colors.red),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+              if (hasil == true) {
+                listJurnal.removeWhere((element) => element["id"] == widget.id);
+                Navigator.of(context).pop(true);
+              }
             },
             icon: Icon(Icons.delete),
           ),

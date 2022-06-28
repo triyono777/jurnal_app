@@ -4,7 +4,15 @@ import './screen/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: "AIzaSyBK0ACS32HtXGi_kMmP7vpaUnHs3JP-qik",
+          authDomain: "projek-ea459.firebaseapp.com",
+          projectId: "projek-ea459",
+          storageBucket: "projek-ea459.appspot.com",
+          messagingSenderId: "1025300124292",
+          appId: "1:1025300124292:web:b105588b0b01a363f228d1",
+          measurementId: "G-62GNLZWL05"));
   runApp(const MyApp());
 }
 

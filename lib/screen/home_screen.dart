@@ -31,7 +31,18 @@ class _HomeScreenState extends State<HomeScreen> {
               case ConnectionState.waiting:
                 return Center(child: CircularProgressIndicator());
               case ConnectionState.done:
-                return bodyWidget(snapshot);
+                var dataPengeluaran = snapshot.data?.docs;
+                var totalPengeluaran = 0;
+                dataPengeluaran?.forEach((data) {
+                  totalPengeluaran += int.parse(data['pengeluaran']);
+                });
+                print(totalPengeluaran.toString());
+                return Column(
+                  children: [
+                    Expanded(child: bodyWidget(snapshot)),
+                    Text('$totalPengeluaran'),
+                  ],
+                );
               default:
                 return SizedBox();
             }
@@ -64,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context) => EditFormScreen(
                 id: allData?[index].id ?? '',
                 nama: allData?[index]["nama_jurnal"],
-                deskripsi: allData?[index]["deskripsi_jurnal"],
+                deskripsi: allData?[index]["pengeluaran"],
                 waktu: allData?[index]["waktu"],
               ),
             ),
@@ -75,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         namaJurnal: allData?[index]["nama_jurnal"],
-        deskripsiJurnal: allData?[index]["deskripsi_jurnal"],
+        deskripsiJurnal: allData?[index]["pengeluaran"],
         waktuJurnal: allData?[index]["waktu"],
       ),
     );

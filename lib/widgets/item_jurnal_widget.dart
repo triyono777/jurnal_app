@@ -18,7 +18,14 @@ class ItemJurnalWidget extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         title: Text('$namaJurnal'),
-        subtitle: Text('$deskripsiJurnal'),
+        subtitle: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('$deskripsiJurnal'),
+            Text('$waktuJurnal'),
+          ],
+        ),
         isThreeLine: true,
       ),
     );

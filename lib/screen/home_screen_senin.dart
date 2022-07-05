@@ -63,9 +63,9 @@ class _HomeScreenSeninState extends State<HomeScreenSenin> {
 
   Widget bodyWidget(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
     var allData = snapshot.data?.docs;
-    // allData = allData?.where((element) {
-    //   return element['waktu'] == 'senin';
-    // }).toList();
+    allData = allData?.where((element) {
+      return element['waktu'] == 'senin';
+    }).toList();
 
     return ListView.builder(
       itemCount: allData?.length,

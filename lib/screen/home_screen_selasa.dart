@@ -63,9 +63,9 @@ class _HomeScreenSelasaState extends State<HomeScreenSelasa> {
 
   Widget bodyWidget(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
     var allData = snapshot.data?.docs;
-    // allData = allData?.where((element) {
-    //   return element['waktu'] == 'selasa';
-    // }).toList();
+    allData = allData?.where((element) {
+      return element['waktu'] == 'selasa';
+    }).toList();
 
     return ListView.builder(
       itemCount: allData?.length,

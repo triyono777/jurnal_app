@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jurnal_app/controller/firebase_controller.dart';
 
 import '../widgets/item_form_widget.dart';
 import '../data/data_jurnal.dart';
@@ -34,11 +35,12 @@ class _AddFormScreenState extends State<AddFormScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              listJurnal.add(
+              FirebaseController().addJurnal(
                 {
                   "id": listJurnal.length + 1,
                   "nama_jurnal": namaController.text,
                   "deskripsi_jurnal": deskripsiController.text,
+                  "pengeluaran": '0',
                   "waktu": waktuController.text
                 },
               );

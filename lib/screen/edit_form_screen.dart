@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:jurnal_app/controller/firebase_controller.dart';
 
 import '../widgets/item_form_widget.dart';
 import '../data/data_jurnal.dart';
@@ -92,12 +93,11 @@ class _EditFormScreenState extends State<EditFormScreen> {
           ),
           ElevatedButton(
             onPressed: () async {
-              var data = listJurnal
-                  .where((element) => element["id"] == widget.id)
-                  .first;
-              data["nama_jurnal"] = namaController.text;
-              data["deskripsi_jurnal"] = deskripsiController.text;
-              data["waktu"] = waktuController.text;
+              FirebaseController().updateJurnal(id: widget.id, data: {
+                "nama_jurnal": namaController.text,
+                "deskripsi_jurnal": deskripsiController.text,
+                "waktu": waktuController.text
+              });
               Navigator.of(context).pop(true);
             },
             child: Text('Simpan'),

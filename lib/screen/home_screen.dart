@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:jurnal_app/controller/firebase_controller.dart';
 import 'package:jurnal_app/screen/edit_form_screen.dart';
+import 'package:jurnal_app/screen/home_screen_selasa.dart';
+import 'package:jurnal_app/screen/home_screen_senin.dart';
 
 import '../widgets/item_jurnal_widget.dart';
 import 'package:jurnal_app/data/data_jurnal.dart';
@@ -17,77 +19,26 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Screen'),
-      ),
-      body: FutureBuilder<QuerySnapshot>(
-          future: FirebaseController().getJurnal(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                // TODO: Handle this case.
-                break;
-              case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
-              case ConnectionState.done:
-                var dataPengeluaran = snapshot.data?.docs;
-                var totalPengeluaran = 0;
-                dataPengeluaran?.forEach((data) {
-                  totalPengeluaran += int.parse(data['pengeluaran']);
-                });
-                print(totalPengeluaran.toString());
-                return Column(
-                  children: [
-                    Expanded(child: bodyWidget(snapshot)),
-                    Text('$totalPengeluaran'),
-                  ],
-                );
-              default:
-                return SizedBox();
-            }
-            return SizedBox();
-          }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          var hasil = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AddFormScreen(),
-            ),
-          );
-          if (hasil == true) {
-            setState(() {});
-          }
-        },
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget bodyWidget(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
-    var allData = snapshot.data?.docs;
-    return ListView.builder(
-      itemCount: allData?.length,
-      itemBuilder: (context, index) => ItemJurnalWidget(
-        onTap: () async {
-          var hasil = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => EditFormScreen(
-                id: allData?[index].id ?? '',
-                nama: allData?[index]["nama_jurnal"],
-                deskripsi: allData?[index]["pengeluaran"],
-                waktu: allData?[index]["waktu"],
-              ),
-            ),
-          );
-          print(hasil);
-          if (hasil == true) {
-            setState(() {});
-          }
-        },
-        namaJurnal: allData?[index]["nama_jurnal"],
-        deskripsiJurnal: allData?[index]["pengeluaran"],
-        waktuJurnal: allData?[index]["waktu"],
+    return DefaultTabController(
+      length: 2, // This is the number of tabs.
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('TabBar Sample'),
+          bottom: TabBar(
+            // These are the widgets to put in each tab in the tab bar.
+            tabs: [
+              Tab(text: 'Senin'),
+              Tab(text: 'Selasa'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          // These are the contents of the tab views, below the tabs.
+          children: [
+            HomeScreenSenin(),
+            HomeScreenSelasa(),
+          ],
+        ),
       ),
     );
   }
